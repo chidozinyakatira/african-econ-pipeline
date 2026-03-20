@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>African Economic Intelligence Pipeline</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8973A;
+    --gold-light: #E8B85A;
+    --dark: #0A0A08;
+    --dark-2: #111110;
+    --dark-3: #1A1A18;
+    --dark-4: #242420;
+    --text: #E8E4DC;
+    --text-muted: #7A7870;
+    --text-dim: #4A4A45;
+    --green: #4CAF6E;
+    --blue: #4A8FBF;
+    --red: #BF4A4A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(200,151,58,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 0;
+    max-width: 900px;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+  }
+
+  h1 .accent { color: var(--gold); }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 600px;
+    margin-bottom: 3rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    border-radius: 2px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--dark);
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--dark-4);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    padding: 2rem 0;
+    border-top: 1px solid var(--dark-4);
+  }
+
+  .stat-item { }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── PIPELINE ── */
+  .section {
+    padding: 6rem 4rem;
+    border-top: 1px solid var(--dark-3);
+  }
+
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .section-sub {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 600px;
+    margin-bottom: 4rem;
+  }
+
+  /* Pipeline flow */
+  .pipeline {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    position: relative;
+  }
+
+  .pipeline-step {
+    position: relative;
+    padding: 2rem 1.5rem;
+    background: var(--dark-2);
+    border: 1px solid var(--dark-4);
+    border-right: none;
+    transition: all 0.3s;
+  }
+
+  .pipeline-step:last-child {
+    border-right: 1px solid var(--dark-4);
+  }
+
+  .pipeline-step:hover {
+    background: var(--dark-3);
+    border-color: var(--gold);
+    z-index: 2;
+  }
+
+  .pipeline-step:hover + .pipeline-step {
+    border-left-color: var(--gold);
+  }
+
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .step-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .step-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .step-tech {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .step-desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Arrow between steps */
+  .pipeline-arrow {
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background: var(--dark);
+    border: 1px solid var(--dark-4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    font-size: 0.6rem;
+    color: var(--gold);
+  }
+
+  /* ── TECH STACK ── */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--dark-4);
+    border: 1px solid var(--dark-4);
+  }
+
+  .stack-item {
+    background: var(--dark-2);
+    padding: 2rem;
+    transition: background 0.2s;
+  }
+
+  .stack-item:hover { background: var(--dark-3); }
+
+  .stack-layer {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .stack-tool {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .stack-detail {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ── DATA ── */
+  .indicators-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--dark-4);
+    border: 1px solid var(--dark-4);
+    margin-top: 2rem;
+  }
+
+  .indicator-item {
+    background: var(--dark-2);
+    padding: 1.5rem;
+  }
+
+  .indicator-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+
+  .indicator-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+  }
+
+  /* ── DBT MODEL ── */
+  .dbt-layers {
+    display: grid;
+    grid-template-columns: 1fr 2px 1fr 2px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .dbt-divider {
+    background: var(--dark-4);
+    align-self: stretch;
+    margin-top: 3rem;
+  }
+
+  .dbt-layer-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--dark-4);
+  }
+
+  .dbt-model {
+    background: var(--dark-2);
+    border: 1px solid var(--dark-4);
+    border-left: 2px solid var(--gold);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .dbt-model-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .dbt-model-type {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    padding: 0.2rem 0.5rem;
+    background: var(--dark-4);
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  .dbt-model-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ── DASHBOARD ── */
+  .dashboard-preview {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .dashboard-card {
+    background: var(--dark-2);
+    border: 1px solid var(--dark-4);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dashboard-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+
+  .dashboard-page-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+  }
+
+  .dashboard-page-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .dashboard-visuals {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .dashboard-visuals li {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .dashboard-visuals li::before {
+    content: '→';
+    color: var(--gold);
+    font-size: 0.7rem;
+  }
+
+  /* ── AUTHOR ── */
+  .author-section {
+    padding: 6rem 4rem;
+    border-top: 1px solid var(--dark-3);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .author-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .author-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+  }
+
+  .author-bio {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .author-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .author-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--dark-4);
+    transition: all 0.2s;
+  }
+
+  .author-link:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .quick-start {
+    background: var(--dark-2);
+    border: 1px solid var(--dark-4);
+    padding: 2rem;
+  }
+
+  .quick-start-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .code-block {
+    background: var(--dark);
+    border: 1px solid var(--dark-4);
+    padding: 1.25rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .code-block .cmd { color: var(--green); }
+  .code-block .comment { color: var(--text-dim); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--dark-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-right {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag { animation: fadeUp 0.6s ease forwards; }
+  h1 { animation: fadeUp 0.6s 0.1s ease forwards; opacity: 0; }
+  .hero-desc { animation: fadeUp 0.6s 0.2s ease forwards; opacity: 0; }
+  .hero-actions { animation: fadeUp 0.6s 0.3s ease forwards; opacity: 0; }
+  .hero-stats { animation: fadeUp 0.6s 0.4s ease forwards; opacity: 0; }
+
+  @media (max-width: 768px) {
+    .hero, .section, .author-section, footer { padding: 3rem 1.5rem; }
+    .pipeline { grid-template-columns: 1fr; }
+    .pipeline-step { border-right: 1px solid var(--dark-4); border-bottom: none; }
+    .pipeline-step:last-child { border-bottom: 1px solid var(--dark-4); }
+    .stack-grid, .indicators-grid { grid-template-columns: 1fr 1fr; }
+    .dbt-layers { grid-template-columns: 1fr; }
+    .dbt-divider { display: none; }
+    .dashboard-preview { grid-template-columns: 1fr; }
+    .author-section { grid-template-columns: 1fr; }
+    .pipeline-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <nav>
+    <span class="nav-logo">african-econ-pipeline</span>
+    <ul class="nav-links">
+      <li><a href="#pipeline">Pipeline</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#data">Data</a></li>
+      <li><a href="#dashboard">Dashboard</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero-content">
+    <span class="hero-tag">Data Engineering Portfolio Project</span>
+    <h1>African<br><span class="accent">Economic</span><br>Intelligence</h1>
+    <p class="hero-desc">
+      A production-style data engineering pipeline ingesting World Bank economic indicators 
+      for 48 African countries — transformed through dbt, orchestrated with Airflow, 
+      and visualised in Power BI.
+    </p>
+    <div class="hero-actions">
+      <a href="https://github.com/chidozinyakatira/african-econ-pipeline" class="btn btn-primary" target="_blank">
+        View on GitHub →
+      </a>
+      <a href="#pipeline" class="btn btn-secondary">Explore Pipeline</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <span class="stat-num">48</span>
+      <span class="stat-label">African Countries</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">8</span>
+      <span class="stat-label">Economic Indicators</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">24</span>
+      <span class="stat-label">Years of Data</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">~9K</span>
+      <span class="stat-label">Rows Ingested</span>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<section class="section" id="pipeline">
+  <div class="section-tag">Architecture</div>
+  <h2 class="section-title">End-to-End Pipeline</h2>
+  <p class="section-sub">Five layers from raw API to interactive dashboard — each stage purpose-built for reliability, reusability, and scale.</p>
+
+  <div class="pipeline">
+    <div class="pipeline-step">
+      <div class="step-num">01</div>
+      <div class="step-icon">🌐</div>
+      <div class="step-name">Ingest</div>
+      <div class="step-tech">Python · Requests · Pandas</div>
+      <div class="step-desc">Fetches World Bank API with batching, pagination, and retry logic. Loads ~9K rows to BigQuery.</div>
+      <div class="pipeline-arrow">→</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">02</div>
+      <div class="step-icon">🗄️</div>
+      <div class="step-name">Store</div>
+      <div class="step-tech">Google BigQuery</div>
+      <div class="step-desc">Partitioned by year, clustered by country and indicator. Raw layer preserved for full reprocessing.</div>
+      <div class="pipeline-arrow">→</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">03</div>
+      <div class="step-icon">⚙️</div>
+      <div class="step-name">Transform</div>
+      <div class="step-tech">dbt Cloud</div>
+      <div class="step-desc">Staging → Dimension → Fact model. Deduplication, type casting, YoY growth calculations.</div>
+      <div class="pipeline-arrow">→</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">04</div>
+      <div class="step-icon">🔄</div>
+      <div class="step-name">Orchestrate</div>
+      <div class="step-tech">Airflow · Docker</div>
+      <div class="step-desc">Weekly DAG runs in Docker containers via WSL2. Ingest → staging → marts in sequence.</div>
+      <div class="pipeline-arrow">→</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">05</div>
+      <div class="step-icon">📊</div>
+      <div class="step-name">Visualise</div>
+      <div class="step-tech">Power BI Service</div>
+      <div class="step-desc">Two-page interactive dashboard. Continental overview and country deepdive with live slicers.</div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section class="section" id="stack">
+  <div class="section-tag">Technology</div>
+  <h2 class="section-title">Tech Stack</h2>
+  <p class="section-sub">Industry-standard tools across every layer of the modern data stack.</p>
+
+  <div class="stack-grid">
+    <div class="stack-item">
+      <div class="stack-layer">Ingestion</div>
+      <div class="stack-tool">Python</div>
+      <div class="stack-detail">Requests, Pandas, PyArrow. Batch API calls with exponential backoff retry logic.</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-layer">Storage</div>
+      <div class="stack-tool">BigQuery</div>
+      <div class="stack-detail">Range partitioned on year. Clustered on country_iso and indicator_name for query efficiency.</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-layer">Transformation</div>
+      <div class="stack-tool">dbt Cloud</div>
+      <div class="stack-detail">3-layer model: raw → staging (views) → marts (tables). Sources registered in YAML.</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-layer">Orchestration</div>
+      <div class="stack-tool">Airflow 2.8</div>
+      <div class="stack-detail">Dockerised via Docker Compose on WSL2. CeleryExecutor with Redis and Postgres backends.</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-layer">Containerisation</div>
+      <div class="stack-tool">Docker</div>
+      <div class="stack-detail">7-container stack: webserver, scheduler, worker, triggerer, postgres, redis, init.</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-layer">Visualisation</div>
+      <div class="stack-tool">Power BI</div>
+      <div class="stack-detail">Connected directly to BigQuery via service account. DAX measures for dynamic KPIs.</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-layer">Version Control</div>
+      <div class="stack-tool">Git / GitHub</div>
+      <div class="stack-detail">Full project tracked with .gitignore, .env.example, and structured folder organisation.</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-layer">Data Source</div>
+      <div class="stack-tool">World Bank API</div>
+      <div class="stack-detail">Free public API. No key required. 48 countries, 8 indicators, 2000–2023.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DATA -->
+<section class="section" id="data">
+  <div class="section-tag">Data</div>
+  <h2 class="section-title">Indicators Tracked</h2>
+  <p class="section-sub">8 macroeconomic indicators spanning growth, stability, trade, and investment across 48 Sub-Saharan African countries from 2000 to 2023.</p>
+
+  <div class="indicators-grid">
+    <div class="indicator-item">
+      <div class="indicator-name">GDP (Current USD)</div>
+      <div class="indicator-code">NY.GDP.MKTP.CD</div>
+    </div>
+    <div class="indicator-item">
+      <div class="indicator-name">GDP Per Capita</div>
+      <div class="indicator-code">NY.GDP.PCAP.CD</div>
+    </div>
+    <div class="indicator-item">
+      <div class="indicator-name">Inflation Rate</div>
+      <div class="indicator-code">FP.CPI.TOTL.ZG</div>
+    </div>
+    <div class="indicator-item">
+      <div class="indicator-name">Unemployment Rate</div>
+      <div class="indicator-code">SL.UEM.TOTL.ZS</div>
+    </div>
+    <div class="indicator-item">
+      <div class="indicator-name">Trade % of GDP</div>
+      <div class="indicator-code">NE.TRD.GNFS.ZS</div>
+    </div>
+    <div class="indicator-item">
+      <div class="indicator-name">FDI Net Inflows</div>
+      <div class="indicator-code">BX.KLT.DINV.CD.WD</div>
+    </div>
+    <div class="indicator-item">
+      <div class="indicator-name">Government Debt % GDP</div>
+      <div class="indicator-code">GC.DOD.TOTL.GD.ZS</div>
+    </div>
+    <div class="indicator-item">
+      <div class="indicator-name">Population Total</div>
+      <div class="indicator-code">SP.POP.TOTL</div>
+    </div>
+  </div>
+</section>
+
+<!-- DBT -->
+<section class="section" id="dbt">
+  <div class="section-tag">Data Model</div>
+  <h2 class="section-title">dbt Layer Architecture</h2>
+  <p class="section-sub">Three-layer medallion architecture — raw preservation, clean staging, and analytical marts.</p>
+
+  <div class="dbt-layers">
+    <div>
+      <div class="dbt-layer-title">Source · Raw</div>
+      <div class="dbt-model">
+        <div class="dbt-model-name">world_bank_indicators</div>
+        <span class="dbt-model-type">BigQuery Table</span>
+        <div class="dbt-model-desc">Raw ingested data. One row per country × indicator × year. ~9K rows. Append-only.</div>
+      </div>
+    </div>
+    <div class="dbt-divider"></div>
+    <div>
+      <div class="dbt-layer-title">Staging · Views</div>
+      <div class="dbt-model">
+        <div class="dbt-model-name">stg_world_bank_indicators</div>
+        <span class="dbt-model-type">View</span>
+        <div class="dbt-model-desc">Deduplicates on ingestion_id. Casts all types explicitly. Filters null country codes.</div>
+      </div>
+    </div>
+    <div class="dbt-divider"></div>
+    <div>
+      <div class="dbt-layer-title">Marts · Tables</div>
+      <div class="dbt-model">
+        <div class="dbt-model-name">dim_countries</div>
+        <span class="dbt-model-type">Table</span>
+        <div class="dbt-model-desc">One row per country. ISO code, name, and derived region classification.</div>
+      </div>
+      <div class="dbt-model">
+        <div class="dbt-model-name">fct_economic_indicators</div>
+        <span class="dbt-model-type">Table</span>
+        <div class="dbt-model-desc">Full fact table with gdp_usd, gdp_yoy_growth_pct (LAG window function), and all indicator values.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section class="section" id="dashboard">
+  <div class="section-tag">Visualisation</div>
+  <h2 class="section-title">Power BI Dashboard</h2>
+  <p class="section-sub">Two interactive pages connected live to BigQuery via service account authentication.</p>
+
+  <div class="dashboard-preview">
+    <div class="dashboard-card">
+      <div class="dashboard-page-num">PAGE 01</div>
+      <div class="dashboard-page-title">Continental Overview</div>
+      <ul class="dashboard-visuals">
+        <li>4 KPI cards — countries, avg growth, largest economy, fastest growing</li>
+        <li>Africa filled map coloured by GDP size</li>
+        <li>Top 10 economies horizontal bar chart</li>
+        <li>Year range slicer (2000–2023) controlling all visuals</li>
+      </ul>
+    </div>
+    <div class="dashboard-card">
+      <div class="dashboard-page-num">PAGE 02</div>
+      <div class="dashboard-page-title">Country Deepdive</div>
+      <ul class="dashboard-visuals">
+        <li>Country dropdown slicer — all 48 countries</li>
+        <li>4 KPI cards — GDP per capita, inflation, unemployment, trade</li>
+        <li>GDP growth rate over time (line chart)</li>
+        <li>FDI net inflows over time (line chart)</li>
+        <li>Inflation history over time (line chart)</li>
+        <li>Top 10 economies by GDP (bar chart)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- AUTHOR -->
+<section class="author-section" id="author">
+  <div>
+    <div class="author-name">Chido Zinyakatira</div>
+    <div class="author-title">Data Engineer · Analyst · BSc Honours Data Science</div>
+    <p class="author-bio">
+      Building data systems at the intersection of African economic development and modern data engineering. 
+      Based in Harare, Zimbabwe. Open to remote data engineering and analytics roles globally.
+    </p>
+    <div class="author-links">
+      <a href="https://www.linkedin.com/in/chido-zinyakatira-327246255" class="author-link" target="_blank">LINKEDIN</a>
+      <a href="https://github.com/chidozinyakatira" class="author-link" target="_blank">GITHUB</a>
+      <a href="https://chidozinyakatira.github.io/chidozinyakatira" class="author-link" target="_blank">PORTFOLIO</a>
+      <a href="https://github.com/chidozinyakatira/african-econ-pipeline" class="author-link" target="_blank">THIS PROJECT</a>
+    </div>
+  </div>
+
+  <div class="quick-start">
+    <div class="quick-start-title">Quick Start</div>
+    <div class="code-block">
+      <span class="comment"># Clone the repo</span><br>
+      <span class="cmd">git clone</span> github.com/chidozinyakatira/<br>
+      &nbsp;&nbsp;african-econ-pipeline<br><br>
+      <span class="comment"># Start Airflow</span><br>
+      <span class="cmd">docker compose up</span> airflow-init<br>
+      <span class="cmd">docker compose up</span> -d<br><br>
+      <span class="comment"># Run dbt models</span><br>
+      <span class="cmd">dbt run</span>
+    </div>
+    <a href="https://github.com/chidozinyakatira/african-econ-pipeline#readme" class="btn btn-secondary" target="_blank" style="width:100%; justify-content:center;">
+      Full Documentation →
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-left">AFRICAN ECONOMIC INTELLIGENCE PIPELINE · 2026</span>
+  <span class="footer-right">World Bank API · BigQuery · dbt · Airflow · Power BI</span>
+</footer>
+
+</body>
+</html>
