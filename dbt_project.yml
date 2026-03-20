@@ -1,0 +1,15 @@
+name: 'african_econ_intelligence'
+version: '1.0.0'
+
+profile: 'african_econ_intelligence'
+
+model-paths: ["models"]
+
+models:
+  african_econ_intelligence:
+    staging:
+      +schema: african_economics_staging
+      +materialized: view
+    marts:
+      +schema: african_economics_marts
+      +materialized: table
