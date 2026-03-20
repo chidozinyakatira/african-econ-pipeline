@@ -874,31 +874,74 @@
 <section class="section" id="dashboard">
   <div class="section-tag">Visualisation</div>
   <h2 class="section-title">Power BI Dashboard</h2>
-  <p class="section-sub">Two interactive pages connected live to BigQuery via service account authentication.</p>
+  <p class="section-sub">Two interactive pages connected live to BigQuery via service account authentication. 48 countries, 8 indicators, dynamic slicers.</p>
 
-  <div class="dashboard-preview">
-    <div class="dashboard-card">
-      <div class="dashboard-page-num">PAGE 01</div>
-      <div class="dashboard-page-title">Continental Overview</div>
-      <ul class="dashboard-visuals">
-        <li>4 KPI cards — countries, avg growth, largest economy, fastest growing</li>
-        <li>Africa filled map coloured by GDP size</li>
-        <li>Top 10 economies horizontal bar chart</li>
-        <li>Year range slicer (2000–2023) controlling all visuals</li>
-      </ul>
+  <div style="display:flex; flex-direction:column; gap:3rem;">
+
+    <div style="position:relative;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <div>
+          <span style="font-family:'DM Mono',monospace; font-size:0.65rem; color:var(--text-dim); letter-spacing:0.15em; text-transform:uppercase;">Page 01</span>
+          <div style="font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:700; margin-top:0.25rem;">Continental Overview</div>
+        </div>
+        <div style="display:flex; gap:1rem; font-size:0.75rem; color:var(--text-muted);">
+          <span>48 countries</span>
+          <span>·</span>
+          <span>Year slicer</span>
+          <span>·</span>
+          <span>Africa map</span>
+        </div>
+      </div>
+      <div style="border:1px solid var(--dark-4); overflow:hidden; position:relative;">
+        <div style="position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--gold), transparent);"></div>
+        <img
+          src="screenshots/Screenshot 2026-03-20 110037.png"
+          alt="Continental Overview Dashboard"
+          style="width:100%; display:block; transition:transform 0.4s ease;"
+          onmouseover="this.style.transform='scale(1.02)'"
+          onmouseout="this.style.transform='scale(1)'"
+        />
+      </div>
+      <div style="display:flex; gap:1.5rem; margin-top:1rem; flex-wrap:wrap;">
+        <span style="font-size:0.75rem; color:var(--text-muted); display:flex; align-items:center; gap:0.4rem;"><span style="color:var(--gold);">→</span> 4 KPI cards</span>
+        <span style="font-size:0.75rem; color:var(--text-muted); display:flex; align-items:center; gap:0.4rem;"><span style="color:var(--gold);">→</span> Africa filled map</span>
+        <span style="font-size:0.75rem; color:var(--text-muted); display:flex; align-items:center; gap:0.4rem;"><span style="color:var(--gold);">→</span> Top 10 economies bar chart</span>
+        <span style="font-size:0.75rem; color:var(--text-muted); display:flex; align-items:center; gap:0.4rem;"><span style="color:var(--gold);">→</span> Interactive year slicer</span>
+      </div>
     </div>
-    <div class="dashboard-card">
-      <div class="dashboard-page-num">PAGE 02</div>
-      <div class="dashboard-page-title">Country Deepdive</div>
-      <ul class="dashboard-visuals">
-        <li>Country dropdown slicer — all 48 countries</li>
-        <li>4 KPI cards — GDP per capita, inflation, unemployment, trade</li>
-        <li>GDP growth rate over time (line chart)</li>
-        <li>FDI net inflows over time (line chart)</li>
-        <li>Inflation history over time (line chart)</li>
-        <li>Top 10 economies by GDP (bar chart)</li>
-      </ul>
+
+    <div style="position:relative;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <div>
+          <span style="font-family:'DM Mono',monospace; font-size:0.65rem; color:var(--text-dim); letter-spacing:0.15em; text-transform:uppercase;">Page 02</span>
+          <div style="font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:700; margin-top:0.25rem;">Country Deepdive</div>
+        </div>
+        <div style="display:flex; gap:1rem; font-size:0.75rem; color:var(--text-muted);">
+          <span>Country slicer</span>
+          <span>·</span>
+          <span>6 visuals</span>
+          <span>·</span>
+          <span>Live data</span>
+        </div>
+      </div>
+      <div style="border:1px solid var(--dark-4); overflow:hidden; position:relative;">
+        <div style="position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--gold), transparent);"></div>
+        <img
+          src="screenshots/Screenshot 2026-03-20 110114.png"
+          alt="Country Deepdive Dashboard"
+          style="width:100%; display:block; transition:transform 0.4s ease;"
+          onmouseover="this.style.transform='scale(1.02)'"
+          onmouseout="this.style.transform='scale(1)'"
+        />
+      </div>
+      <div style="display:flex; gap:1.5rem; margin-top:1rem; flex-wrap:wrap;">
+        <span style="font-size:0.75rem; color:var(--text-muted); display:flex; align-items:center; gap:0.4rem;"><span style="color:var(--gold);">→</span> 4 KPI cards per country</span>
+        <span style="font-size:0.75rem; color:var(--text-muted); display:flex; align-items:center; gap:0.4rem;"><span style="color:var(--gold);">→</span> GDP growth over time</span>
+        <span style="font-size:0.75rem; color:var(--text-muted); display:flex; align-items:center; gap:0.4rem;"><span style="color:var(--gold);">→</span> FDI netflows over time</span>
+        <span style="font-size:0.75rem; color:var(--text-muted); display:flex; align-items:center; gap:0.4rem;"><span style="color:var(--gold);">→</span> Inflation history</span>
+      </div>
     </div>
+
   </div>
 </section>
 
