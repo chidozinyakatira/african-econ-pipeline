@@ -216,5 +216,5 @@ dim_countries             fct_economic_indicators
 **Chido Zinyakatira**
 - 🔗 [LinkedIn](https://www.linkedin.com/in/chido-zinyakatira-327246255)
 - 💻 [GitHub](https://github.com/chidozinyakatira)
-- 🌐 [Portfolio]((https://github.com/chidozinyakatira/african-econ-pipeline))
+- 🌐 [Portfolio](https://github.com/chidozinyakatira/african-econ-pipeline)
 - 🎓 BSc Honours Data Science — Eduvos (Distinction, 2025)
